@@ -5,12 +5,73 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from collections import deque
 import statistics
+import json
 
+import multiprocessing
+
+from http.server import HTTPServer, BaseHTTPRequestHandler, SimpleHTTPRequestHandler
+
+from flask import Flask, render_template, jsonify
+app = Flask(__name__)
+
+numberArray = [1,2,3,4]
+
+'''
 print("Start")
 port="/dev/tty.HC-06-DevB" #This will be different for various devices and on windows it will probably be a COM port.
 bluetooth=serial.Serial(port, 9600)#Start communications with the bluetooth unit
 print("Connected")
 bluetooth.flushInput() #This gives the bluetooth a little kick
+'''
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/numbers')
+def getNumbers():
+    f = open('numbers.txt', 'r')
+    x = f.read().split(',')
+    f.close()
+    return jsonify(x)
+
+'''
+class Serv(BaseHTTPRequestHandler):
+
+    def end_headers (self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        BaseHTTPRequestHandler.end_headers(self)
+
+    def do_GET(self):
+        print(self)
+        if self.path == '/':
+            self.path = '/index.html'
+        if self.path != '/testing':
+            print("wrong place")
+            try:
+                file_to_open = open(self.path[1:]).read()
+                self.send_response(200)
+            except:
+                file_to_open = "File not found"
+                self.send_response(404)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            #super(Serv, self).end_headers(self)
+            self.end_headers()
+            self.wfile.write(bytes(file_to_open, 'utf-8'))
+        else:
+            print("Logging testing")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header('Content-type', 'application/json')
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(bytes(json.dumps({'hello': 'world', 'received': 'ok'}), 'utf-8'))
+
+'''
+
+
+
 
 def getDistance():
     distance = 0
@@ -80,7 +141,43 @@ ani = animation.FuncAnimation(fig,
     fargs=(ys,),
     interval=50,
     blit=True)
-plt.show()
+
+def startServer():
+    app.run(host='0.0.0.0', port=80)
+    '''
+    httpd = HTTPServer(('localhost', 8000), Serv)
+    httpd.serve_forever()
+    '''
+
+
+def startPlotting():
+    i = 0
+    f = open('numbers.txt', 'w')
+    while i < 100:
+        med = meanDistance()
+        f.write(',')
+        f.write('{}'.format(med))
+        i += 1
+    x = f.read().split(',')
+    f.close()
+    print(x)
+    #plt.show()
+
+
+
+
+
+def main():
+    pool = multiprocessing.Pool(processes=2)
+    pool.apply_async(startServer)
+    # pool.apply_async(startPlotting)
+
+    pool.close()
+    pool.join()
+
+
+main()
+
 
 #input_data = bluetooth.readline()
 #print(input_data.decode())
