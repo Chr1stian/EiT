@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7f4f4573-4154-40cb-a9f4-350ceb94c1fd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth_sensor.py" afterPath="$PROJECT_DIR$/bluetooth_sensor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/numbers.txt" afterPath="$PROJECT_DIR$/numbers.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -79,8 +78,8 @@
       <file leaf-file-name="bluetooth_sensor.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bluetooth_sensor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44954127">
-              <caret line="165" column="16" selection-start-line="165" selection-start-column="16" selection-end-line="165" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.40366971">
+              <caret line="183" column="65" selection-start-line="183" selection-start-column="65" selection-end-line="183" selection-end-column="65" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -695,8 +694,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bluetooth_sensor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44954127">
-          <caret line="165" column="16" selection-start-line="165" selection-start-column="16" selection-end-line="165" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.40366971">
+          <caret line="183" column="65" selection-start-line="183" selection-start-column="65" selection-end-line="183" selection-end-column="65" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

@@ -176,15 +176,20 @@ def startPlotting():
         f.write('{}'.format(med))
         i += 1
     total_difference = 0
+    start_total = False
     for measure in difference_index:
         if measureList[measure] > measureList[measure - 1]:
             total_difference += (measureList[measure] - measureList[measure - 1])
-        elif measureList[measure] < measureList[measure - 1]:
-            if total_difference > 10:
+            start_total = True
+        elif measureList[measure] < measureList[measure - 1] and start_total:
+            start_total = False
+            if total_difference < 10:
                 bad_tire = True
+                print("Total difference")
                 print(total_difference)
                 total_difference = 0
             else:
+                print("Trigger")
                 total_difference = 0
     print(total_difference)
     print(measureList)
