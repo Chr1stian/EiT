@@ -112,7 +112,8 @@ distances = deque(10 * [0], 10)
 def meanDistance():
     global distances
     distances.pop()
-    distances.appendleft(getDistance())
+    distance = getDistance()
+    distances.appendleft(distance)
     tot = distances.__getitem__(0) + distances.__getitem__(1) + distances.__getitem__(2) + distances.__getitem__(3) + distances.__getitem__(4) + distances.__getitem__(5) + distances.__getitem__(6) + distances.__getitem__(7) + distances.__getitem__(8) + distances.__getitem__(9)
     print(distances)
     med = statistics.median(list(distances))
@@ -158,18 +159,41 @@ def startServer():
 def startPlotting():
     i = 0
     f = open('numbers.txt', 'w')
+    last_med = 0
+    measureList = []
+    difference_index = []
+    bad_tire = False
     while i < 100:
         med = meanDistance()
+        if (last_med - 2) < med < (last_med + 2):
+            med = last_med
+        else:
+            last_med = med
+            if i > 5:
+                difference_index.append(i)
+        measureList.append(med)
         f.write(',')
         f.write('{}'.format(med))
         i += 1
+    total_difference = 0
+    for measure in difference_index:
+        if measureList[measure] > measureList[measure - 1]:
+            total_difference += (measureList[measure] - measureList[measure - 1])
+        elif measureList[measure] < measureList[measure - 1]:
+            if total_difference > 10:
+                bad_tire = True
+                print(total_difference)
+                total_difference = 0
+            else:
+                total_difference = 0
+    print(total_difference)
+    print(measureList)
+    f.write(',')
+    f.write(str(bad_tire))
     x = f.read().split(',')
     f.close()
     print(x)
     #plt.show()
-
-
-
 
 
 def main():
