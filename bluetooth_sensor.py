@@ -16,13 +16,13 @@ app = Flask(__name__)
 
 numberArray = [1,2,3,4]
 
-'''
+
 print("Start")
 port="/dev/tty.HC-06-DevB" #This will be different for various devices and on windows it will probably be a COM port.
 bluetooth=serial.Serial(port, 9600)#Start communications with the bluetooth unit
 print("Connected")
 bluetooth.flushInput() #This gives the bluetooth a little kick
-'''
+
 
 @app.route('/')
 @app.route('/index')
@@ -36,6 +36,11 @@ def getNumbers():
     x = f.read().split(',')
     f.close()
     return jsonify(x)
+
+@app.route('/startprocess')
+def startProcess():
+
+    return 200
 
 '''
 class Serv(BaseHTTPRequestHandler):
@@ -168,12 +173,13 @@ def startPlotting():
 
 
 def main():
-    pool = multiprocessing.Pool(processes=2)
+    pool = multiprocessing.Pool(processes=4)
     pool.apply_async(startServer)
-    # pool.apply_async(startPlotting)
-
+    res = pool.apply_async(startPlotting)
+    print(res)
     pool.close()
     pool.join()
+
 
 
 main()
